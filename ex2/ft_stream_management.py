@@ -17,13 +17,13 @@ def save_archive(new_filename: str, content: str) -> None:
         file.write(content)
         print(f"Data saved in file '{new_filename}'")
     except Exception as e:
-        sys.stderr.write(f"[STDERR] Error opening file '{new_filename}': {e}\n")
+        sys.stderr.write(f"[STDERR] Error opening file"
+                         f"'{new_filename}': {e}\n")
         sys.stderr.flush()
         print("Data not saved.")
     finally:
         if file is not None and not file.closed:
             file.close()
-
 
 
 def main() -> None:
@@ -38,7 +38,7 @@ def main() -> None:
     file: typing.IO[str] | None = None
     content: str = ""
     try:
-        file = open(filename, "r") 
+        file = open(filename, "r")
         content = file.read()
         print("---")
         print(content, end="" if content.endswith("\n") else "\n")
@@ -62,13 +62,12 @@ def main() -> None:
     sys.stdout.flush()
 
     raw_input: str = sys.stdin.readline()
-    new_filename: str = raw_input.strip() 
+    new_filename: str = raw_input.strip()
 
     if not new_filename:
         print("Not saving data.")
     else:
         save_archive(new_filename, transformed)
-
 
 
 if __name__ == "__main__":

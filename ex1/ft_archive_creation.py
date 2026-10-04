@@ -23,7 +23,6 @@ def save_archive(new_filename: str, content: str) -> None:
             file.close()
 
 
-
 def main() -> None:
     if len(sys.argv) != 2:
         print("Usage: ft_archive_creation.py <file>")
@@ -33,7 +32,7 @@ def main() -> None:
     print("=== Cyber Archives Recovery & Presentation ===")
     print(f"Accessing file '{filename}'")
 
-    file: typing.IO[str] | None = None 
+    file: typing.IO[str] | None = None
     try:
         file = open(filename, "r")
         content: str = file.read()
