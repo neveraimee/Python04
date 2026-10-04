@@ -16,10 +16,9 @@ def save_archive(new_filename: str, content: str) -> None:
         file = open(new_filename, "w")
         file.write(content)
         print(f"Data saved in file '{new_filename}'")
-    except Exception as e:
-        sys.stderr.write(f"[STDERR] Error opening file"
-                         f"'{new_filename}': {e}\n")
-        sys.stderr.flush()
+    except OSError as e:
+        print(f"[STDERR] Error opening file"
+              f"'{new_filename}': {e}", file=sys.stderr, flush=True)
         print("Data not saved.")
     finally:
         if file is not None and not file.closed:
@@ -28,7 +27,10 @@ def save_archive(new_filename: str, content: str) -> None:
 
 def main() -> None:
     if len(sys.argv) != 2:
-        print("Usage: ft_stream_management.py <file>")
+        print(
+            "Usage: ft_stream_management.py <file>",
+            file=sys.stderr, flush=True
+        )
         return
 
     filename: str = sys.argv[1]
@@ -43,9 +45,9 @@ def main() -> None:
         print("---")
         print(content, end="" if content.endswith("\n") else "\n")
         print("---")
-    except Exception as e:
-        sys.stderr.write(f"[STDERR] Error opening file '{filename}': {e}\n")
-        sys.stderr.flush()
+    except OSError as e:
+        print(f"[STDERR] Error opening file '{filename}': {e}",
+              file=sys.stderr, flush=True)
         return
     finally:
         if file is not None and not file.closed:
@@ -53,17 +55,17 @@ def main() -> None:
             print(f"File '{filename}' closed.")
 
     print("\nTransform data:")
-    print("---")
+    print("---\n")
     transformed: str = transform_content(content)
     print(transformed, end="" if transformed.endswith("\n") else "\n")
-    print("---")
+    print("\n---")
 
-    sys.stdout.write("Enter new file name (or empty): ")
-    sys.stdout.flush()
+    print(
+            "Enter new file name (or empty): ",
+            end="", file=sys.stdout, flush=True
+    )
 
-    raw_input: str = sys.stdin.readline()
-    new_filename: str = raw_input.strip()
-
+    new_filename: str = sys.stdin.readline().strip()
     if not new_filename:
         print("Not saving data.")
     else:

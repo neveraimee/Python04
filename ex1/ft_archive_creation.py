@@ -16,7 +16,7 @@ def save_archive(new_filename: str, content: str) -> None:
         file = open(new_filename, "w")
         file.write(content)
         print(f"Data saved in file '{new_filename}.'")
-    except Exception as e:
+    except OSError as e:
         print(f"Error writing to file '{new_filename}': {e}")
     finally:
         if file is not None and not file.closed:
@@ -36,10 +36,10 @@ def main() -> None:
     try:
         file = open(filename, "r")
         content: str = file.read()
-        print("---")
+        print("---\n")
         print(content, end="" if content.endswith("\n") else "\n")
-        print("---")
-    except Exception as e:
+        print("\n---")
+    except OSError as e:
         print(f"Error opening file '{filename}': {e}")
         return
     finally:
@@ -48,10 +48,10 @@ def main() -> None:
             print(f"File '{filename}' closed.")
 
     print("\nTransform data:")
-    print("---")
+    print("---\n")
     transformed: str = transform_content(content)
     print(transformed, end="" if transformed.endswith("\n") else "\n")
-    print("---")
+    print("\n---")
     new_filename: str = input("Enter new file name (or empty): ").strip()
     if not new_filename:
         print("Not saving data.")

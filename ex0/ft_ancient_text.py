@@ -16,10 +16,10 @@ def main() -> None:
     try:
         file = open(filename, "r")
         content: str = file.read()
-        print("---")
+        print("---\n")
         print(content, end="" if content.endswith("\n") else "\n")
-        print("---")
-    except Exception as e:
+        print("\n---")
+    except OSError as e:
         print(f"Error opening file '{filename}': {e}")
     finally:
         if file is not None and not file.closed:
